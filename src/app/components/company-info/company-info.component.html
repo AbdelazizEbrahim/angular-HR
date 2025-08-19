@@ -1,0 +1,120 @@
+<div class="company-info-container">
+  <div class="header">
+    <h1 class="page-title">
+      <mat-icon>corporate_fare</mat-icon>
+      Company Information
+    </h1>
+    
+    <button mat-raised-button color="primary" (click)="toggleEdit()">
+      <mat-icon>{{isEditMode ? 'cancel' : 'edit'}}</mat-icon>
+      {{isEditMode ? 'Cancel' : 'Edit'}}
+    </button>
+  </div>
+
+  <div *ngIf="isLoading; else content">
+    <app-loading-spinner message="Loading company information..."></app-loading-spinner>
+  </div>
+  
+  <ng-template #content>
+    <form [formGroup]="companyForm" (ngSubmit)="onSubmit()">
+      <mat-card class="company-card mat-elevation-z4">
+        <div class="company-logo">
+          <div app-avatar [name]="companyForm.get('name').value" [size]="120" [fontSize]="36"></div>
+        </div>
+        
+        <div class="company-details">
+          <div class="form-row">
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Company Name</mat-label>
+              <input matInput formControlName="name" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.name.invalid">
+                Company name is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Industry</mat-label>
+              <input matInput formControlName="industry" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.industry.invalid">
+                Industry is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Address</mat-label>
+              <input matInput formControlName="address" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.address.invalid">
+                Address is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Website</mat-label>
+              <input matInput formControlName="website" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.website.invalid">
+                Website is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Phone</mat-label>
+              <input matInput formControlName="phone" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.phone.invalid">
+                Phone is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Founded Year</mat-label>
+              <input matInput formControlName="foundedYear" type="number" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.foundedYear.invalid">
+                Valid year is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Employees</mat-label>
+              <input matInput formControlName="employeeCount" type="number" [readonly]="!isEditMode">
+              <mat-error *ngIf="formControls.employeeCount.invalid">
+                Employee count is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" [floatLabel]="isEditMode ? 'always' : 'never'">
+              <mat-label>Revenue</mat-label>
+              <input matInput formControlName="revenue" type="number" [readonly]="!isEditMode">
+              <span matPrefix>$&nbsp;</span>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width" [floatLabel]="isEditMode ? 'always' : 'never'">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" rows="3" [readonly]="!isEditMode"></textarea>
+          </mat-form-field>
+        </div>
+      </mat-card>
+
+      <div class="actions" *ngIf="isEditMode">
+        <button mat-raised-button color="warn" type="button" (click)="toggleEdit()">
+          Cancel
+        </button>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          type="submit"
+          [disabled]="companyForm.invalid || isLoading">
+          {{isLoading ? 'Saving...' : 'Save Changes'}}
+          <mat-icon *ngIf="isLoading">
+            <mat-spinner diameter="20"></mat-spinner>
+          </mat-icon>
+        </button>
+      </div>
+    </form>
+  </ng-template>
+</div>

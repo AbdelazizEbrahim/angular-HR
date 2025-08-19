@@ -1,0 +1,103 @@
+<h1 mat-dialog-title>
+  {{isEditMode ? 'Edit Employee' : 'Add New Employee'}}
+</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        <mat-error *ngIf="formControls.firstName.invalid">
+          First name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        <mat-error *ngIf="formControls.lastName.invalid">
+          Last name is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-error *ngIf="formControls.email.invalid">
+          Valid email is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" required>
+        <mat-error *ngIf="formControls.phone.invalid">
+          Phone number is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Position</mat-label>
+        <input matInput formControlName="position" required>
+        <mat-error *ngIf="formControls.position.invalid">
+          Position is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="departmentId" required>
+          <mat-option *ngFor="let dept of departments" [value]="dept.id">
+            {{dept.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.departmentId.invalid">
+          Department is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Hire Date</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="hireDate" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="formControls.hireDate.invalid">
+          Hire date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{status}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.status.invalid">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSubmit()"
+    [disabled]="employeeForm.invalid || isLoading">
+    {{isLoading ? 'Saving...' : (isEditMode ? 'Update' : 'Save')}}
+    <mat-icon *ngIf="isLoading">
+      <mat-spinner diameter="20"></mat-spinner>
+    </mat-icon>
+  </button>
+</mat-dialog-actions>

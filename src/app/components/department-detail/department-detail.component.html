@@ -1,0 +1,65 @@
+<h1 mat-dialog-title>
+  {{isEditMode ? 'Edit Department' : 'Add New Department'}}
+</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="departmentForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Department Name</mat-label>
+        <input matInput formControlName="name" required>
+        <mat-error *ngIf="formControls.name.invalid">
+          Name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" required>
+        <mat-error *ngIf="formControls.location.invalid">
+          Location is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Budget</mat-label>
+        <input matInput formControlName="budget" type="number" required>
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="formControls.budget.invalid">
+          Valid budget is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Department Head</mat-label>
+        <mat-select formControlName="headId">
+          <mat-option value="">None</mat-option>
+          <mat-option *ngFor="let manager of managers" [value]="manager.id">
+            {{manager.firstName}} {{manager.lastName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSubmit()"
+    [disabled]="departmentForm.invalid || isLoading">
+    {{isLoading ? 'Saving...' : (isEditMode ? 'Update' : 'Save')}}
+    <mat-icon *ngIf="isLoading">
+      <mat-spinner diameter="20"></mat-spinner>
+    </mat-icon>
+  </button>
+</mat-dialog-actions>

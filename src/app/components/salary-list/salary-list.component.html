@@ -1,0 +1,100 @@
+<div class="salary-list-container">
+  <div class="list-header">
+    <h1 class="page-title">
+      <mat-icon>attach_money</mat-icon>
+      Salary Management
+    </h1>
+    
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openSalaryForm()">
+        <mat-icon>add</mat-icon>
+        Add Salary Record
+      </button>
+      
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Salaries</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter salaries">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div *ngIf="isLoading; else tableContent">
+      <app-loading-spinner message="Loading salary records..."></app-loading-spinner>
+    </div>
+    
+    <ng-template #tableContent>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+        <!-- Employee Column -->
+        <ng-container matColumnDef="employee">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="employee-info">
+              <div app-avatar [name]="row.employee?.firstName + ' ' + row.employee?.lastName"></div>
+              <div>
+                <div class="employee-name">{{row.employee?.firstName}} {{row.employee?.lastName}}</div>
+                <div class="employee-position">{{row.employee?.position}}</div>
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Amount</th>
+          <td mat-cell *matCellDef="let row">
+            {{row.amount | currency}}
+            <div class="bonus" *ngIf="row.bonus">
+              + {{row.bonus | currency}} bonus
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Frequency Column -->
+        <ng-container matColumnDef="frequency">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Frequency</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-chip>{{row.paymentFrequency}}</mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Effective Date Column -->
+        <ng-container matColumnDef="effectiveDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Effective Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{row.effectiveDate | date:'mediumDate'}}
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-badge {{getStatus(row.endDate)}}">
+              {{getStatus(row.endDate)}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" matTooltip="Edit" (click)="openSalaryForm(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteSalary(row.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </ng-template>
+  </div>
+</div>

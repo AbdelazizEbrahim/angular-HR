@@ -1,0 +1,22 @@
+<div class="not-found-container">
+  <mat-card class="not-found-card mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>404 - Page Not Found</mat-card-title>
+      <mat-card-subtitle>The requested page could not be found</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <div class="illustration">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+      <p>We couldn't find the page you were looking for. It might have been moved or deleted.</p>
+    </mat-card-content>
+    
+    <mat-card-actions>
+      <button mat-raised-button color="primary" (click)="goHome()">
+        <mat-icon>home</mat-icon>
+        Go to Homepage
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

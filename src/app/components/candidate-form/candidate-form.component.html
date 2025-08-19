@@ -1,0 +1,115 @@
+<h1 mat-dialog-title>
+  {{isEditMode ? 'Edit Candidate' : 'Add New Candidate'}}
+</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="candidateForm" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName" required>
+        <mat-error *ngIf="formControls.firstName.invalid">
+          First name is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName" required>
+        <mat-error *ngIf="formControls.lastName.invalid">
+          Last name is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email" required>
+        <mat-error *ngIf="formControls.email.invalid">
+          Valid email is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phone" required>
+        <mat-error *ngIf="formControls.phone.invalid">
+          Phone number is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Position Applied</mat-label>
+        <input matInput formControlName="positionApplied" required>
+        <mat-error *ngIf="formControls.positionApplied.invalid">
+          Position is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Department</mat-label>
+        <mat-select formControlName="departmentApplied" required>
+          <mat-option *ngFor="let dept of departments" [value]="dept.id">
+            {{dept.name}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.departmentApplied.invalid">
+          Department is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status" required>
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{status}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.status.invalid">
+          Status is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Application Date</mat-label>
+        <input matInput [matDatepicker]="appDatePicker" formControlName="applicationDate" required>
+        <mat-datepicker-toggle matSuffix [for]="appDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #appDatePicker></mat-datepicker>
+        <mat-error *ngIf="formControls.applicationDate.invalid">
+          Application date is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Interview Date</mat-label>
+      <input matInput [matDatepicker]="intDatePicker" formControlName="interviewDate">
+      <mat-datepicker-toggle matSuffix [for]="intDatePicker"></mat-datepicker-toggle>
+      <mat-datepicker #intDatePicker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Notes</mat-label>
+      <textarea matInput formControlName="notes" rows="3"></textarea>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSubmit()"
+    [disabled]="candidateForm.invalid || isLoading">
+    {{isLoading ? 'Saving...' : (isEditMode ? 'Update' : 'Save')}}
+    <mat-icon *ngIf="isLoading">
+      <mat-spinner diameter="20"></mat-spinner>
+    </mat-icon>
+  </button>
+</mat-dialog-actions>

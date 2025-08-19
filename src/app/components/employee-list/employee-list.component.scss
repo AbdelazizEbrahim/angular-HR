@@ -1,0 +1,115 @@
+@import 'src/styles/theme';
+
+.employee-list-container {
+  padding: 24px;
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    
+    .page-title {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      color: mat-color($primary);
+      
+      mat-icon {
+        margin-right: 12px;
+      }
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      margin-top: 16px;
+      
+      button {
+        margin-right: 16px;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+      
+      .search-field {
+        width: 300px;
+        
+        @media (max-width: 600px) {
+          width: 100%;
+          margin-top: 16px;
+        }
+      }
+      
+      @media (max-width: 600px) {
+        flex-direction: column;
+        width: 100%;
+        
+        button {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+  
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 16px;
+    
+    table {
+      width: 100%;
+      
+      .employee-name {
+        font-weight: 500;
+      }
+      
+      .employee-email {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+      }
+      
+      mat-chip {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        
+        &.active {
+          background: rgba(76, 175, 80, 0.1);
+          color: #4CAF50;
+        }
+        
+        &.on-leave {
+          background: rgba(255, 193, 7, 0.1);
+          color: #FFC107;
+        }
+        
+        &.terminated {
+          background: rgba(244, 67, 54, 0.1);
+          color: #F44336;
+        }
+      }
+      
+      .tenure {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+    
+    mat-paginator {
+      margin-top: 16px;
+    }
+  }
+}

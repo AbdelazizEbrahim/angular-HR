@@ -1,25 +1,29 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirmation-dialog',
   templateUrl: './confirmation-dialog.component.html',
-  styleUrls: ['./confirmation-dialog.component.scss']  // This now points to the file we created
+  styleUrls: ['./confirmation-dialog.component.scss']
 })
 export class ConfirmationDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { 
-      message: string,
-      title?: string,
-      confirmText?: string,
-      cancelText?: string 
+    @Inject(MAT_DIALOG_DATA) public data: {
+      title: string;
+      message: string;
+      confirmText: string;
+      cancelText: string;
+      isDestructive?: boolean;
     }
-  ) { 
-    // Set default values if not provided
-    this.data.title = this.data.title || 'Confirm';
-    this.data.confirmText = this.data.confirmText || 'Yes';
-    this.data.cancelText = this.data.cancelText || 'No';
+  ) {
+    this.data = {
+      title: data.title || 'Confirm',
+      message: data.message || 'Are you sure?',
+      confirmText: data.confirmText || 'Confirm',
+      cancelText: data.cancelText || 'Cancel',
+      isDestructive: data.isDestructive || false
+    };
   }
 
   onConfirm(): void {

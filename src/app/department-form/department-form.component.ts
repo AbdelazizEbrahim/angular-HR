@@ -45,8 +45,10 @@ export class DepartmentFormComponent implements OnInit {
         this.departmentService.updateDepartment(department)
           .subscribe(() => this.dialogRef.close(true));
       } else {
-        this.departmentService.addDepartment(department)
-          .subscribe(() => this.dialogRef.close(true));
+        this.departmentService.createDepartment(department)
+  .subscribe(result => {
+    console.log('Department added', result);
+  });
       }
     }
   }

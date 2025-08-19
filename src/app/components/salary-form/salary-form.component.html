@@ -1,0 +1,95 @@
+<h1 mat-dialog-title>
+  {{isEditMode ? 'Edit Salary Record' : 'Add New Salary Record'}}
+</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="salaryForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Employee</mat-label>
+      <mat-select formControlName="employeeId" required>
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">
+          {{employee.firstName}} {{employee.lastName}} ({{employee.position}})
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="formControls.employeeId.invalid">
+        Employee is required
+      </mat-error>
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Amount</mat-label>
+        <input matInput formControlName="amount" type="number" required>
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="formControls.amount.invalid">
+          Valid amount is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Payment Frequency</mat-label>
+        <mat-select formControlName="paymentFrequency" required>
+          <mat-option *ngFor="let freq of frequencyOptions" [value]="freq">
+            {{freq}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="formControls.paymentFrequency.invalid">
+          Frequency is required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Effective Date</mat-label>
+        <input matInput [matDatepicker]="effectiveDatePicker" formControlName="effectiveDate" required>
+        <mat-datepicker-toggle matSuffix [for]="effectiveDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #effectiveDatePicker></mat-datepicker>
+        <mat-error *ngIf="formControls.effectiveDate.invalid">
+          Effective date is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>End Date</mat-label>
+        <input matInput [matDatepicker]="endDatePicker" formControlName="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+        <mat-datepicker #endDatePicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Bonus</mat-label>
+        <input matInput formControlName="bonus" type="number">
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="formControls.bonus.invalid">
+          Must be positive value
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Tax Deductions</mat-label>
+        <input matInput formControlName="taxDeductions" type="number">
+        <span matPrefix>$&nbsp;</span>
+        <mat-error *ngIf="formControls.taxDeductions.invalid">
+          Must be positive value
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onSubmit()"
+    [disabled]="salaryForm.invalid || isLoading">
+    {{isLoading ? 'Saving...' : (isEditMode ? 'Update' : 'Save')}}
+    <mat-icon *ngIf="isLoading">
+      <mat-spinner diameter="20"></mat-spinner>
+    </mat-icon>
+  </button>
+</mat-dialog-actions>

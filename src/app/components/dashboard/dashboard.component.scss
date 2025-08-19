@@ -1,0 +1,119 @@
+@import 'src/styles/theme';
+
+.dashboard-container {
+  padding: 24px;
+  
+  .page-title {
+    color: mat-color($primary);
+    margin-bottom: 24px;
+    font-weight: 500;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 24px;
+    
+    .stat-card {
+      mat-card-header {
+        margin-bottom: 16px;
+        
+        mat-card-title {
+          font-size: 18px;
+          font-weight: 500;
+        }
+        
+        mat-icon {
+          background: mat-color($primary);
+          color: white;
+          padding: 8px;
+          border-radius: 50%;
+        }
+      }
+      
+      mat-card-content {
+        .stat-value {
+          font-size: 36px;
+          font-weight: 500;
+          color: mat-color($primary);
+          line-height: 1;
+          margin-bottom: 8px;
+        }
+        
+        .stat-label {
+          color: rgba(0, 0, 0, 0.6);
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    
+    @media (max-width: 960px) {
+      grid-template-columns: 1fr;
+    }
+    
+    mat-card {
+      mat-card-header {
+        mat-card-title {
+          font-size: 18px;
+          font-weight: 500;
+        }
+        
+        mat-icon {
+          background: mat-color($primary);
+          color: white;
+          padding: 8px;
+          border-radius: 50%;
+        }
+      }
+      
+      mat-list-item {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        .secondary-text {
+          color: rgba(0, 0, 0, 0.6);
+          font-size: 14px;
+          margin-top: 4px;
+          
+          .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            
+            &.applied {
+              background: rgba(0, 0, 0, 0.1);
+              color: rgba(0, 0, 0, 0.6);
+            }
+            
+            &.interviewing {
+              background: rgba(33, 150, 243, 0.1);
+              color: #2196F3;
+            }
+            
+            &.offered {
+              background: rgba(255, 193, 7, 0.1);
+              color: #FFC107;
+            }
+            
+            &.hired {
+              background: rgba(76, 175, 80, 0.1);
+              color: #4CAF50;
+            }
+          }
+        }
+      }
+    }
+  }
+}

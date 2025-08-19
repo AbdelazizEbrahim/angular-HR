@@ -1,0 +1,101 @@
+<div class="employee-list-container">
+  <div class="list-header">
+    <h1 class="page-title">
+      <mat-icon>people</mat-icon>
+      Employee Directory
+    </h1>
+    
+    <div class="header-actions">
+      <button mat-raised-button color="primary" (click)="openEmployeeForm()">
+        <mat-icon>add</mat-icon>
+        Add Employee
+      </button>
+      
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Employees</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Filter employees">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <div *ngIf="isLoading; else tableContent">
+      <app-loading-spinner message="Loading employees..."></app-loading-spinner>
+    </div>
+    
+    <ng-template #tableContent>
+      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z1">
+        <!-- Avatar Column -->
+        <ng-container matColumnDef="avatar">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <div app-avatar [name]="row.firstName + ' ' + row.lastName"></div>
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="employee-name">{{row.firstName}} {{row.lastName}}</div>
+            <div class="employee-email">{{row.email}}</div>
+          </td>
+        </ng-container>
+
+        <!-- Department Column -->
+        <ng-container matColumnDef="department">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Department</th>
+          <td mat-cell *matCellDef="let row">
+            <mat-chip>{{row.departmentId | departmentName}}</mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Position</th>
+          <td mat-cell *matCellDef="let row">{{row.position}}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="status-badge {{getStatusClass(row.status)}}">
+              {{row.status}}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Hire Date Column -->
+        <ng-container matColumnDef="hireDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Hire Date</th>
+          <td mat-cell *matCellDef="let row">
+            {{row.hireDate | date:'mediumDate'}}
+            <div class="tenure" *ngIf="row.hireDate">
+              ({{calculateTenure(row.hireDate)}})
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let row">
+            <button mat-icon-button color="primary" matTooltip="Edit" (click)="openEmployeeForm(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Delete" (click)="deleteEmployee(row.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+    </ng-template>
+  </div>
+</div>

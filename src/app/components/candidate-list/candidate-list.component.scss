@@ -1,0 +1,142 @@
+@import 'src/styles/theme';
+
+.candidate-list-container {
+  padding: 24px;
+  
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    
+    .page-title {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      color: mat-color($primary);
+      
+      mat-icon {
+        margin-right: 12px;
+      }
+    }
+    
+    .header-actions {
+      display: flex;
+      align-items: center;
+      margin-top: 16px;
+      
+      button {
+        margin-right: 16px;
+        
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+      
+      .search-field {
+        width: 300px;
+        
+        @media (max-width: 600px) {
+          width: 100%;
+          margin-top: 16px;
+        }
+      }
+      
+      @media (max-width: 600px) {
+        flex-direction: column;
+        width: 100%;
+        
+        button {
+          width: 100%;
+          margin-right: 0;
+          margin-bottom: 16px;
+        }
+      }
+    }
+  }
+  
+  .table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    padding: 16px;
+    
+    table {
+      width: 100%;
+      
+      .candidate-info {
+        display: flex;
+        align-items: center;
+        
+        div[appAvatar] {
+          margin-right: 12px;
+        }
+        
+        .candidate-name {
+          font-weight: 500;
+        }
+        
+        .candidate-contact {
+          font-size: 12px;
+          color: rgba(0, 0, 0, 0.6);
+        }
+      }
+      
+      mat-chip {
+        font-size: 12px;
+        font-weight: 500;
+      }
+      
+      .status-select {
+        display: none;
+        
+        &:hover, &:focus-within {
+          display: block;
+        }
+      }
+      
+      .status-badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 16px;
+        font-size: 12px;
+        font-weight: 500;
+        
+        &.applied {
+          background: rgba(0, 0, 0, 0.1);
+          color: rgba(0, 0, 0, 0.6);
+        }
+        
+        &.interviewing {
+          background: rgba(33, 150, 243, 0.1);
+          color: #2196F3;
+        }
+        
+        &.offered {
+          background: rgba(255, 193, 7, 0.1);
+          color: #FFC107;
+        }
+        
+        &.hired {
+          background: rgba(76, 175, 80, 0.1);
+          color: #4CAF50;
+        }
+        
+        &.rejected {
+          background: rgba(244, 67, 54, 0.1);
+          color: #F44336;
+        }
+      }
+      
+      .interview-date {
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.6);
+      }
+    }
+    
+    mat-paginator {
+      margin-top: 16px;
+    }
+  }
+}

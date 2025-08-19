@@ -1,0 +1,73 @@
+@import 'src/styles/theme';
+
+.company-info-container {
+  padding: 24px;
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    .page-title {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      color: mat-color($primary);
+      
+      mat-icon {
+        margin-right: 12px;
+      }
+    }
+  }
+  
+  .company-card {
+    padding: 32px;
+    margin-bottom: 24px;
+    
+    .company-logo {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    
+    .company-details {
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-bottom: 16px;
+        
+        @media (max-width: 960px) {
+          grid-template-columns: 1fr;
+        }
+      }
+      
+      .full-width {
+        width: 100%;
+        margin-bottom: 16px;
+      }
+      
+      mat-form-field {
+        width: 100%;
+        
+        ::ng-deep .mat-form-field-outline {
+          background-color: white;
+          border-radius: 4px;
+        }
+      }
+    }
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    
+    button {
+      mat-icon {
+        margin-right: 8px;
+      }
+    }
+  }
+}

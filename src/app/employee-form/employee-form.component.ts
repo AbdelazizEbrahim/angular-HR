@@ -59,7 +59,7 @@ export class EmployeeFormComponent implements OnInit {
         this.employeeService.updateEmployee(employee)
           .subscribe(() => this.dialogRef.close(true));
       } else {
-        this.employeeService.addEmployee(employee)
+this.employeeService.createEmployee(employee)
           .subscribe(() => this.dialogRef.close(true));
       }
     }
