@@ -1,0 +1,24 @@
+.header-toolbar {
+  margin-bottom: 20px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.filter-container {
+  padding: 20px;
+}
+
+.table-container {
+  overflow: auto;
+  max-height: 600px;
+}
+
+table {
+  width: 100%;
+}
+
+mat-paginator {
+  margin-top: 10px;
+}
